@@ -1,4 +1,4 @@
-# 公司分类规范（Company Classification）
+﻿# 公司分类规范（Company Classification）
 
 本规范用于给检索到的岗位标注 `company_tag`（公司类型），让报告不仅能按匹配度分组，
 还能按「公司画像」筛选（例如「只看 AI 独角兽」「只看大厂」）。

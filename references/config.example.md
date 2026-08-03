@@ -1,4 +1,4 @@
-# job-radar 配置文件模板（复制为 search-config.md 后填写）
+﻿# job-radar 配置文件模板（复制为 search-config.md 后填写）
 
 > 这是给想手动控制检索范围的人用的模板。把本文件复制成 `profile/search-config.md`
 > 并按下面逐项填写，工具就能按你的个人情况工作。

@@ -1,4 +1,4 @@
----
+﻿---
 name: job-radar
 description: >
   岗位雷达 Job Radar —— 中国大陆求职检索脚手架。基于用户简历（核心输入）或口述背景，

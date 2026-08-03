@@ -1,4 +1,4 @@
-# Excel 导出规范
+﻿# Excel 导出规范
 
 > 搜索完成、去重与质检通过后，必须产出一份 Excel 表格（每个岗位附真实可点击的链接）。
 > 在 job-radar 中，这份 Excel 由 `scripts/report.py` **自动生成**（与 HTML 报告同时产出），
