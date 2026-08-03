@@ -3,42 +3,50 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{TITLE}</title>
 <style>
-  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-       background:#f5f6f8;color:#222;margin:0;padding:24px}
-  .wrap{max-width:880px;margin:0 auto}
-  h1{font-size:20px;margin:0 0 4px}
-  .sub{color:#666;font-size:13px;margin-bottom:16px}
-  .stat{display:inline-block;background:#fff;border:1px solid #eee;border-radius:10px;
-        padding:8px 14px;margin:0 8px 16px 0;font-size:13px}
-  .card{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px 16px;
-        margin-bottom:12px}
-  .card.closed{border-color:#f3b0b0;background:#fff6f6}
-  .head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .badge{color:#fff;border-radius:6px;padding:2px 8px;font-size:12px;white-space:nowrap}
-  .badge.closed{background:#A32D2D}
-  .event{font-size:12px;color:#555;background:#eef2f7;border-radius:6px;padding:2px 8px;white-space:nowrap}
-  .verify{font-size:12px;background:#fff;border:1px solid #ddd;border-radius:6px;
-          padding:1px 8px;white-space:nowrap;cursor:help}
-  .warnbar{background:#FFF4E5;border:1px solid #FFB74D;color:#8A4B00;border-radius:10px;
-           padding:12px 16px;margin-bottom:16px;font-size:13px;line-height:1.6}
-  .warnbar code{background:#fff;border:1px solid #e0c9a6;border-radius:4px;padding:1px 6px}
-  .title{font-size:15px;font-weight:600}
-  .title a{color:#185FA5;text-decoration:none}
-  .meta{display:flex;gap:16px;flex-wrap:wrap;color:#555;font-size:13px;margin:8px 0}
-  .match{font-size:13px;color:#0F6E56;margin:4px 0}
-  .desc{font-size:13px;color:#444;line-height:1.6;margin-top:4px;
-         max-height:120px;overflow:auto}
-  .recheck{font-size:12px;color:#8A4B00;background:#FFF4E5;border:1px solid #FFB74D;
-           border-radius:8px;padding:8px 10px;margin-top:6px;line-height:1.6}
-  .closed-h{font-size:16px;color:#A32D2D;margin:24px 0 8px}
-  .empty{color:#888;background:#fff;border:1px dashed #ccc;border-radius:12px;
-          padding:24px;text-align:center}
-  footer{color:#999;font-size:12px;margin-top:24px;text-align:center}
+:root{--ink:#18212f;--muted:#687386;--line:#dce3ec;--blue:#245a91;--bg:#f4f7fb;--green:#1f8a4c;--yellow:#b8860b;--red:#a32d2d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 system-ui,"Microsoft YaHei",sans-serif}
+main{max-width:1180px;margin:auto;padding:24px 18px 60px}
+header{background:linear-gradient(135deg,#173e68,#245a91);color:#fff;border-radius:16px;padding:22px 24px}
+header h1{margin:0 0 6px;font-size:22px}
+header p{margin:2px 0;opacity:.92;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin:18px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 8px;text-align:center;font-size:12px;color:var(--muted)}
+.stat b{display:block;font-size:21px;color:var(--blue);line-height:1.2;font-weight:700}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 16px}
+select{padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:13px}
+.card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--line);border-radius:13px;padding:14px 16px}
+.card.green{border-left-color:var(--green)} .card.yellow{border-left-color:var(--yellow)} .card.red{border-left-color:var(--red)}
+.card.closed{border-left-color:var(--red);background:#fff6f6}
+.head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.badge{color:#fff;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:600;white-space:nowrap}
+.badge.green{background:var(--green)} .badge.yellow{background:var(--yellow)} .badge.red{background:var(--red)} .badge.closed{background:var(--red)}
+.event{font-size:12px;color:#555;background:#eef2f7;border-radius:6px;padding:2px 8px;white-space:nowrap}
+.verify{font-size:12px;border:1px solid #ddd;border-radius:6px;padding:1px 8px;cursor:help;white-space:nowrap}
+.title{font-size:15px;font-weight:600}
+.title a{color:#185FA5;text-decoration:none}
+.meta{display:flex;gap:14px;flex-wrap:wrap;color:#555;font-size:13px;margin:4px 0}
+.match{font-size:13px;color:#0F6E56;margin:4px 0}
+.desc{font-size:13px;color:#444;line-height:1.6;margin-top:4px;max-height:130px;overflow:auto}
+.recheck{font-size:12px;color:#8A4B00;background:#FFF4E5;border:1px solid #FFB74D;border-radius:8px;padding:8px 10px;margin-top:6px;line-height:1.6}
+.warnbar{background:#FFF4E5;border:1px solid #FFB74D;color:#8A4B00;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;line-height:1.6}
+.warnbar code{background:#fff;border:1px solid #e0c9a6;border-radius:4px;padding:1px 6px}
+.empty{color:#888;background:#fff;border:1px dashed #ccc;border-radius:12px;padding:24px;text-align:center;grid-column:1/-1}
+.closed-h{font-size:16px;color:var(--red);margin:24px 0 8px}
+footer{color:#999;font-size:12px;margin-top:24px;text-align:center}
 </style></head>
-<body><div class="wrap">
-  <h1>{TITLE}</h1>
-  <div class="sub">生成时间 {GENTIME} · 仅含本期变化（新增 / 更新 / 重开 / 疑似下架）</div>
-  <div>{STATS}</div>
-  {BODY}
-  <footer>由 job-radar 生成 · 岗位信息来自第三方平台，投递前请自行核实</footer>
-</div></body></html>
+<body><main>
+<header><h1>{TITLE}</h1><p>生成时间 {GENTIME} · 仅含本期变化（新增 / 更新 / 重开 / 疑似下架）</p></header>
+<div class="stats">{STATS}</div>
+{FILTERS}
+{BODY}
+<footer>由 job-radar 生成 · 岗位信息来自第三方平台，投递前请自行核实</footer>
+</main>
+<script>
+const cards=[...document.querySelectorAll('.card')];
+for(const key of ['city','source','level']){const el=document.getElementById('f-'+key);if(!el)continue;[...new Set(cards.map(c=>c.dataset[key]).filter(Boolean))].sort().forEach(v=>el.add(new Option(v,v)));}
+function applyFilter(){for(const c of cards){c.hidden=['city','source','level'].some(k=>{const v=document.getElementById('f-'+k).value;return v&&c.dataset[k]!==v;});}}
+for(const k of ['city','source','level'])document.getElementById('f-'+k).addEventListener('change',applyFilter);
+</script>
+</body></html>

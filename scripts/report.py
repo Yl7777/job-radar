@@ -189,7 +189,7 @@ def render_html(jobs):
             vlabel, vcolor = RECHECK_BADGE if j.get("needs_recheck") else VERIFY_BADGE[verify_of(j)]
             vtip = esc(j.get("verify_evidence") or "")
             row = f"""
-      <div class="card" style="border-left:4px solid {color}">
+      <div class="card {lv}" data-level="{lv}" data-city="{esc(j.get('city') or '')}" data-source="{esc(j.get('source') or '')}" style="border-left:4px solid {color}">
         <div class="head">
           <span class="badge" style="background:{color}">{icon} {label}</span>
           <span class="event">{ev}</span>
@@ -215,7 +215,7 @@ def render_html(jobs):
         link_html = f'<a href="{link}" target="_blank" rel="noopener">{esc(j.get("title"))}</a>' \
             if link else esc(j.get("title"))
         closed_cards.append(f"""
-      <div class="card closed">
+      <div class="card closed" data-level="red" data-city="{esc(j.get('city') or '')}" data-source="{esc(j.get('source') or '')}">
         <div class="head">
           <span class="badge closed">⚠️ 疑似下架</span>
           <span class="title">{link_html}</span>
@@ -279,12 +279,23 @@ def render_html(jobs):
                   '已标「⚠️ 需手动复核」并附<b>再检索线索</b>（岗位名 / 帖子标题 / 作者 / 发送时间）。'
                   '请在该平台 App 内用这些信息确认在招并投递，不要直接相信本报告链接。</div>')
 
+    filters_html = (
+        '<div class="filters">'
+        '<select id="f-city"><option value="">全部城市</option></select>'
+        '<select id="f-source"><option value="">全部来源</option></select>'
+        '<select id="f-level"><option value="">全部等级</option>'
+        '<option value="green">🟢 高度匹配</option>'
+        '<option value="yellow">🟡 基本匹配</option>'
+        '<option value="red">🔴 参考 / 下架</option></select>'
+        '</div>'
+    )
     if os.path.exists(TEMPLATE):
         with open(TEMPLATE, encoding="utf-8") as f:
             tpl = f.read()
         html = (tpl.replace("{TITLE}", f"岗位雷达 · {date_str}")
                    .replace("{GENTIME}", today.strftime("%Y-%m-%d %H:%M"))
                    .replace("{STATS}", stats_html)
+                   .replace("{FILTERS}", filters_html)
                    .replace("{BODY}", banner + body + closed_section))
     else:
         html = f"""<!doctype html>
