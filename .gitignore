@@ -1,0 +1,22 @@
+# 运行时生成的数据与数据库
+data/
+reports/
+*.db
+__pycache__/
+*.pyc
+
+# 含推送凭证的个人配置，切勿提交
+profile/push-config.md
+
+# 个人实例配置（保留模板，忽略他人填好的）
+profile/search-config.md
+
+# 运行产物（每次检索生成，不入库）
+prefs.json
+prompt.txt
+jobs_raw.json
+new_jobs.json
+__pycache__/
+
+# brief.py 写下的「数据保存路径」标记（含个人绝对路径，切勿提交）
+.jobradar_home
