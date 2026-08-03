@@ -15,8 +15,9 @@
   2) 求职类型（实习/校招/社招）
   3) 目标城市
   4) 岗位方向/关键词
-  5) 硬性要求
-  6) 检索平台（多选；登录墙平台标注「需手动复核」，同样直接 site: 搜，不登录）
+  5) 硬性要求（薪资/双休/大厂等）
+  6) 出勤天数（实习必填）、实习时长（实习必填）、最早到岗时间
+  7) 检索平台（多选；登录墙平台标注「需手动复核」，同样直接 site: 搜，不登录）
 """
 import json
 import os
@@ -212,7 +213,20 @@ def main():
     # ---- 5) 硬性要求 ----
     hard = ask_multi("硬性要求？（多选）", HARD_FILTERS, default_all=False)
 
-    # ---- 6) 检索平台（多选）----
+    # ---- 6) 出勤天数 / 实习时长 / 最早到岗时间 ----
+    min_days, duration_months, start_date = "", "", ""
+    if "实习" in job_types:
+        raw = input("\n实习每周至少能出勤几天？（直接回车=不限制）\n  > ").strip()
+        if raw.isdigit():
+            min_days = int(raw)
+        raw = input("\n至少能连续实习几个月？（直接回车=不限制）\n  > ").strip()
+        if raw.isdigit():
+            duration_months = int(raw)
+    raw = input("\n最早到岗时间？（如 立即 / 一周内 / 9月初 / 下学期开始后，回车=未限定）\n  > ").strip()
+    if raw:
+        start_date = raw
+
+    # ---- 7) 检索平台（多选）----
     plat_labels = [f"{p}（{tag}）" for p, tag in PLATFORMS]
     plat_names = [p for p, _ in PLATFORMS]
     print("\n【第六步：检索平台（多选）】")
@@ -229,13 +243,6 @@ def main():
             selected_names.append(name)
     login_selected = [n for n, t in PLATFORMS if n in selected_names and t == "登录墙"]
     free_selected = [n for n, t in PLATFORMS if n in selected_names and t == "免登录"]
-
-    # ---- 实习出勤天数 ----
-    min_days = ""
-    if "实习" in job_types:
-        raw = input("\n实习每周至少能出勤几天？（直接回车=不限制）\n  > ").strip()
-        if raw.isdigit():
-            min_days = int(raw)
 
     # ---- 无简历则口述 ----
     background = ""
@@ -255,6 +262,8 @@ def main():
         "platforms_walled": login_selected,
         "platforms_free": free_selected,
         "min_days_per_week": min_days,
+        "duration_months": duration_months,
+        "start_date": start_date,
         "background": background,
         "data_dir": DATA_HOME,
         "generated_at": datetime.now().isoformat(timespec="seconds"),
@@ -286,6 +295,8 @@ def main():
 - 岗位方向/关键词：{keywords}
 - 硬性要求：{hard_line}
 { f"- 实习每周至少出勤：{min_days} 天" if min_days else "" }
+{ f"- 实习时长至少：{duration_months} 个月" if duration_months else "" }
+{ f"- 最早到岗时间：{start_date}" if start_date else "" }
 - 本次检索平台：{ "、".join(selected_names) if selected_names else "（由你按方向自由选择免登录平台）" }
 
 {resume_block}
